@@ -1,8 +1,11 @@
 import express from 'express';
-import { getGlobalQuote } from '../controllers/stockController';
+import { getGlobalQuote, getStockOverview, getSymbolSearch } from '../controllers/stockController';
+import { validateSymbolQuery } from '../middleware/validateSymbolQuery';
 
 const router = express.Router();
 
-router.get('/quote', getGlobalQuote);
+router.get('/quote', validateSymbolQuery, getGlobalQuote);
+router.get('/overview', validateSymbolQuery, getStockOverview);
+router.get('/search', getSymbolSearch);
 
 export default router;
