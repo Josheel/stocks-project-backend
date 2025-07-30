@@ -2,6 +2,8 @@ import { alphaVantageRequest } from './clients/alphaVantageClient';
 import { ALPHA_VANTAGE_API_KEY, BASE_URL } from '../config/alphaVantage';
 import { SearchResult, RawSearchResult, normalizeSearchResults } from './types/SYMBOL_SEARCH';
 import { RawGlobalQuote, GlobalQuote, normalizeGlobalQuote } from './types/GLOBAL_QUOTE';
+import { getTimeSeriesWeekly } from '../controllers/stockController';
+import { TimeSeries, normalizeTimeSeriesResultsForCandleStick } from './types/TIME_SERIES';
 
 export async function fetchGlobalQuote(symbol: string): Promise<GlobalQuote> {
     const response = await alphaVantageRequest<{ 'Global Quote' : RawGlobalQuote }>({
@@ -28,4 +30,20 @@ export async function fetchSymbolSearch(keywords: string):  Promise<SearchResult
     });
 
     return normalizeSearchResults(response.bestMatches ?? []);
+}
+
+
+export async function fetchTimeSeriesWeekly(symbol: string): Promise<any> {
+    const response = await alphaVantageRequest<{ "Weekly Time Series": TimeSeries}>({
+        function: 'TIME_SERIES_WEEKLY',
+        symbol
+    })
+
+    const weeklyData: TimeSeries | undefined = response?.["Weekly Time Series"];
+
+  if (!weeklyData) {
+    return [];
+  }
+
+  return normalizeTimeSeriesResultsForCandleStick(weeklyData);
 }

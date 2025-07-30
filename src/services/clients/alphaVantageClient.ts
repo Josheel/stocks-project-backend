@@ -5,6 +5,7 @@ export async function alphaVantageRequest<T = unknown>(
     params: Record<string, string>
 ): Promise<T> {
     try {
+        console.log(params);
         const response = await axios.get<T>(BASE_URL, {
             params: {
                 ...params,
