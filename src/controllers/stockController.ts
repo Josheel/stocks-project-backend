@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { fetchGlobalQuote, fetchStockOverview, fetchSymbolSearch, fetchTimeSeriesWeekly } from '../services/alphaVantageService';
+import { fetchGlobalQuote, fetchStockOverview, fetchSymbolSearch, fetchTimeSeriesWeekly, fetchStockDetails } from '../services/alphaVantageService';
 
 export async function getGlobalQuote(req: Request, res: Response): Promise<void> {
     const symbol = req.query.symbol as string;
@@ -43,11 +43,22 @@ export async function getSymbolSearch(req: Request, res: Response): Promise<void
 
 export async function getTimeSeriesWeekly(req: Request, res: Response): Promise<void> {
     const symbol = req.query.symbol as string;
-      try {
+    try {
         const data = await fetchTimeSeriesWeekly(symbol);
         res.json(data);
     } catch (error) {
         console.error('Error in getTimeSeriesWeekly', error);
         res.status(500).json({ error: 'Failed to fetch stock data.' });
+    }
+}
+
+export async function getStockDetails(req: Request, res: Response): Promise<void> {
+    const symbol = req.query.symbol as string;
+    try {
+        const data = await fetchStockDetails(symbol);
+        res.json(data);
+    } catch (error) {
+        console.error('Error in getStockDetails', error);
+        res.status(500).json({ error: 'Failed to fetch stock details data' });
     }
 }

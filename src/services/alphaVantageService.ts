@@ -4,6 +4,8 @@ import { SearchResult, RawSearchResult, normalizeSearchResults } from './types/S
 import { RawGlobalQuote, GlobalQuote, normalizeGlobalQuote } from './types/GLOBAL_QUOTE';
 import { getTimeSeriesWeekly } from '../controllers/stockController';
 import { TimeSeries, normalizeTimeSeriesResultsForCandleStick } from './types/TIME_SERIES';
+import { StockDetailsResponse, prepareStockDetailsResponse } from './types/StockDetails';
+import { Overview } from './types/OVERVIEW';
 
 export async function fetchGlobalQuote(symbol: string): Promise<GlobalQuote> {
     const response = await alphaVantageRequest<{ 'Global Quote' : RawGlobalQuote }>({
@@ -46,4 +48,12 @@ export async function fetchTimeSeriesWeekly(symbol: string): Promise<any> {
   }
 
   return normalizeTimeSeriesResultsForCandleStick(weeklyData);
+}
+
+export async function fetchStockDetails(symbol: string): Promise<StockDetailsResponse> {
+    const quote: GlobalQuote = await fetchGlobalQuote(symbol);
+    const overview: Overview = await fetchStockOverview(symbol);
+    const response: StockDetailsResponse = prepareStockDetailsResponse(quote, overview); 
+
+    return response;
 }
