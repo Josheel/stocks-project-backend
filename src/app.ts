@@ -7,7 +7,7 @@ dotenv.config();
 const app = express();
 
 if(process.env.NODE_ENV === 'development') {
-    app.use(cors({ origin: 'http://localhost:5173' }));
+    app.use(cors({ origin: `${process.env.FRONT_END_ORIGIN}` }));
 }
 
 app.use(express.json());

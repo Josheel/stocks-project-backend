@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { raw, Request, Response } from 'express';
 import { fetchGlobalQuote, fetchStockOverview, fetchSymbolSearch, fetchTimeSeriesWeekly, fetchStockDetails } from '../services/alphaVantageService';
 
 export async function getGlobalQuote(req: Request, res: Response): Promise<void> {
@@ -25,7 +25,6 @@ export async function getStockOverview(req: Request, res: Response): Promise<voi
 
 export async function getSymbolSearch(req: Request, res: Response): Promise<void> {
     const rawQuery = req.query.search;
-
     if (typeof rawQuery !== 'string' || !rawQuery.trim()) {
        res.json([]);
        return;

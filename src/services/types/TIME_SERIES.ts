@@ -8,19 +8,46 @@ export interface TimeSeriesDataPoint {
 
 export type TimeSeries = Record<string, TimeSeriesDataPoint>;
 
+// Candle Stick Time Series
 export interface CandleStickPoint {
    x: string,
    y: [number, number, number, number] // [open, high, low, close]
 }
 
-export function normalizeTimeSeriesResultsForCandleStick(data: TimeSeries): CandleStickPoint[] {
-    return Object.entries(data).map(([date, point]) => ({
-        x: date,
-        y: [
-            parseFloat(point['1. open']), 
-            parseFloat(point['2. high']), 
-            parseFloat(point['3. low']), 
-            parseFloat(point['4. close'])
-        ]
-    }));
+// Line Chart for historical price data
+export interface LineDataPoint {
+    x: string,
+    y: number
+}
+
+export interface TimeSeriesWeeklyResponse {
+    candlestick: CandleStickPoint[],
+    line: LineDataPoint[]
+}
+
+export function prepareTimeSeriesWeeklyResults(data: TimeSeries): TimeSeriesWeeklyResponse {
+    const candleSeries: CandleStickPoint[] = [];
+    const lineSeries: LineDataPoint[] = [];
+
+    for (const [date, point] of Object.entries(data)) {
+        const open = parseFloat(point["1. open"]);
+        const high = parseFloat(point["2. high"]);
+        const low = parseFloat(point["3. low"]);
+        const close = parseFloat(point["4. close"]);
+
+        candleSeries.push({
+            x: date,
+            y: [open, high, low, close]
+        });
+
+        lineSeries.push({
+            x: date,
+            y: close
+        });
+    }
+
+    return {
+        candlestick: candleSeries,
+        line: lineSeries
+    };
 }
