@@ -49,16 +49,15 @@ export async function fetchTimeSeriesWeekly(symbol: string): Promise<TimeSeriesW
         line: []
     };
   }
-
+  const res = cnqT;
   return prepareTimeSeriesWeeklyResults(weeklyData);
-// return cnqT
 }
 
 export async function fetchStockDetails(symbol: string): Promise<StockDetailsResponse> {
     const quote: GlobalQuote = await fetchGlobalQuote(symbol);
     const overview: Overview = await fetchStockOverview(symbol);
     const response: StockDetailsResponse = prepareStockDetailsResponse(quote, overview); 
-    // const response: StockDetailsResponse = cnqD;
+    const response2: StockDetailsResponse = cnqD;
     return response;
 }
 
