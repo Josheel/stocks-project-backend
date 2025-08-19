@@ -36,28 +36,29 @@ export async function fetchSymbolSearch(keywords: string):  Promise<SearchResult
 
 
 export async function fetchTimeSeriesWeekly(symbol: string): Promise<TimeSeriesWeeklyResponse> {
-    const response = await alphaVantageRequest<{ "Weekly Time Series": TimeSeries}>({
-        function: 'TIME_SERIES_WEEKLY',
-        symbol
-    })
+//     const response = await alphaVantageRequest<{ "Weekly Time Series": TimeSeries}>({
+//         function: 'TIME_SERIES_WEEKLY',
+//         symbol
+//     })
 
-    const weeklyData: TimeSeries | undefined = response?.["Weekly Time Series"];
+//     const weeklyData: TimeSeries | undefined = response?.["Weekly Time Series"];
 
-  if (!weeklyData) {
-    return {
-        candlestick: [],
-        line: []
-    };
-  }
-  const res = cnqT;
-  return prepareTimeSeriesWeeklyResults(weeklyData);
+//   if (!weeklyData) {
+//     return {
+//         candlestick: [],
+//         line: []
+//     };
+//   }
+
+//   return prepareTimeSeriesWeeklyResults(weeklyData);
+return cnqT
 }
 
 export async function fetchStockDetails(symbol: string): Promise<StockDetailsResponse> {
-    const quote: GlobalQuote = await fetchGlobalQuote(symbol);
-    const overview: Overview = await fetchStockOverview(symbol);
-    const response: StockDetailsResponse = prepareStockDetailsResponse(quote, overview); 
-    const response2: StockDetailsResponse = cnqD;
+    // const quote: GlobalQuote = await fetchGlobalQuote(symbol);
+    // const overview: Overview = await fetchStockOverview(symbol);
+    // const response: StockDetailsResponse = prepareStockDetailsResponse(quote, overview); 
+    const response: StockDetailsResponse = cnqD;
     return response;
 }
 
