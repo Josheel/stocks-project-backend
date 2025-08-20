@@ -1,5 +1,4 @@
 import { alphaVantageRequest } from './clients/alphaVantageClient';
-import { ALPHA_VANTAGE_API_KEY, BASE_URL } from '../config/alphaVantage';
 import { SearchResult, RawSearchResult, normalizeSearchResults } from './types/SYMBOL_SEARCH';
 import { RawGlobalQuote, GlobalQuote, normalizeGlobalQuote } from './types/GLOBAL_QUOTE';
 import { getTimeSeriesWeekly } from '../controllers/stockController';
