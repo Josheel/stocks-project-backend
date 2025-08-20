@@ -1,15 +1,15 @@
 import axios from 'axios';
-import { ALPHA_VANTAGE_API_KEY, BASE_URL } from '../../config/alphaVantage';
+import config from '../../config';
 
 export async function alphaVantageRequest<T = unknown>(
     params: Record<string, string>
 ): Promise<T> {
     try {
         console.log(params);
-        const response = await axios.get<T>(BASE_URL, {
+        const response = await axios.get<T>(config.ALPHA_VANTAGE_BASE_URL, {
             params: {
                 ...params,
-                apikey: ALPHA_VANTAGE_API_KEY
+                apikey: config.ALPHA_VANTAGE_API_KEY
             }
         });
 
